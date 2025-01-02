@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/common/component/custom_text_form_field.dart';
 import 'package:restaurant_app/common/const/colors.dart';
@@ -8,8 +12,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dio = Dio();
+
+    // localhost
+    final emulatorIp = '10.0.2.2:3000';
+    final simulatorIp = '127.0.0.1:3000';
+
+    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
+
     return DefaultLayout(
         child: SingleChildScrollView(
+      // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       child: SafeArea(
         top: true,
@@ -35,6 +48,7 @@ class LoginScreen extends StatelessWidget {
                 onChanged: (String value) {},
                 hintText: '이메일을 입력해주세요.',
               ),
+              const SizedBox(height: 16.0),
               CustomTextFormField(
                 onChanged: (String value) {},
                 hintText: '비밀번호를 입력해주세요.',
@@ -44,13 +58,31 @@ class LoginScreen extends StatelessWidget {
                 height: 16.0,
               ),
               ElevatedButton(
-                  onPressed: () {},
-                  style:
-                      ElevatedButton.styleFrom(foregroundColor: PRIMARY_COLOR),
+                  onPressed: () async {
+                    // ID:비밀번호
+                    final rawString = 'test@codefactory.ai:testtest';
+
+                    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+
+                    String token = stringToBase64.encode(rawString);
+
+                    final resp = await dio.post('http://$ip/auth/login',
+                        options: Options(
+                            headers: {'authorization': 'Basic $token'}));
+
+                    print(resp.data);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: PRIMARY_COLOR,
+                  ),
                   child: Text('로그인')),
               TextButton(
                   onPressed: () {},
-                  style: TextButton.styleFrom(foregroundColor: Colors.black),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    // foregroundColor: PRIMARY_COLOR
+                  ),
                   child: Text('회원가입'))
             ],
           ),

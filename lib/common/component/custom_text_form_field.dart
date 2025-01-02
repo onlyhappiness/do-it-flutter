@@ -8,14 +8,14 @@ class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
   final ValueChanged<String>? onChanged;
 
-  const CustomTextFormField({
-      required this.onChanged,
+  const CustomTextFormField(
+      {required this.onChanged,
       this.autofocus = false,
       this.obscureText = false,
       this.hintText,
       this.errorText,
-      Key? key
-  }) : super(key: key);
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

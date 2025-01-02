@@ -1,14 +1,17 @@
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/common/component/custom_text_form_field.dart';
-import 'package:restaurant_app/common/layout/default_layout.dart';
 import 'package:restaurant_app/user/view/login_screen.dart';
 
 void main() {
-  runApp(_App());
+  runApp(
+    _App()
+  );
 }
 
 class _App extends StatelessWidget {
-  const _App({super.key});
+  const _App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans'
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: LoginScreen()
     );
   }
 }
